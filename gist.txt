@@ -1,0 +1,91 @@
+Endpoints
+  GET /[:user_id]
+    - id
+    - file_name
+    - gist_description
+    - url
+    - sample
+  GET /[:user_id]/[:gist_id]
+     - id
+     - file_name
+     - blob
+  GET /[:user_id]/[:gist_id]/revisions
+    - all files diffed with their last revision
+  PUT /[:user_id]/[:gist_id]/edit
+    - id
+    - file_name
+    - blob
+  DELETE /[:user_id]/[:gist_id]/delete
+
+Entities
+  Users
+  Gists
+  Comments
+  Revisions
+
+  Stretch
+    Subscriptions
+    Stars
+    Revisions
+
+Relationships
+  User has many gists
+  Gist belongs to user
+  User has comments
+  Comment belongs to user
+  Comment belongs to gist
+
+Attributes
+  Users
+    id
+    username
+    created_at
+  
+  Gists
+    id
+    visibility
+    user_id
+    created_at
+    updated_at
+
+  Revisions
+    id
+    created_at
+
+  FileRevisions
+    id
+    revision_id
+    file_id
+    body
+    name
+    created_at
+  
+  Files
+    id
+    gist_id
+    deleted WHEN WAS THIS DELETED
+    created_at
+
+-------------------------
+
+  Comment
+    id
+    user_id
+    gist_id
+    body
+    created_at
+    updated_at
+
+Invarients
+  ids must be unique
+
+User stories - a user can:
+  - View a gist
+  - Create a gist
+  - Revise a gist
+  - Create a comments
+  - Edit a comment
+  - Download a zip of the gist
+
+
+
