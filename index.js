@@ -4,28 +4,43 @@ const app = express()
 const port = 3000
 const db = require('./queries')
 
-app.use(bodyParser.json())
+const gist = require('./proto/gist_pb')
 
-app.use(
-  bodyParser.urlencoded({
-    extended: true,
-  })
-)
+let message = new gist.Gist()
 
-app.get('/', (_request, response) => {
-  response.json({ info: 'Gist API' })
-})
+message.setId('thisismyid')
+message.setUserId('thisismyuserid')
 
-app.get('/:user_id', db.gistsForUser)
+console.log(message)
 
-app.get('/:user_id/:gist_id', db.editGistById)
+var bytes = message.serializeBinary();
 
-app.get('/:user_id/:gist_id/revisions', db.revisionsByGistId)
+var message2 = gist.Gist.deserializeBinary(bytes);
 
-app.put('/:user_id/:gist_id/edit', db.editGistById)
+console.log(message2.getId())
 
-app.delete('/:user_id/:gist_id/delete')
+// app.use(bodyParser.json())
 
-app.listen(port, () => {
-  console.log(`App running on port ${port}.`)
-})
+// app.use(
+//   bodyParser.urlencoded({
+//     extended: true,
+//   })
+// )
+
+// app.get('/', (_request, response) => {
+//   response.json(message2)
+// })
+
+// app.listen(port, () => {
+//   console.log(`App running on port ${port}.`)
+// })
+
+// app.get('/:user_id', db.gistsForUser)
+
+// app.get('/:user_id/:gist_id', db.editGistById)
+
+// app.get('/:user_id/:gist_id/revisions', db.revisionsByGistId)
+
+// app.put('/:user_id/:gist_id/edit', db.editGistById)
+
+// app.delete('/:user_id/:gist_id/delete')
